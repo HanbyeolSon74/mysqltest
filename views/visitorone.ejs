@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>상세</div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>작성자</th>
+          <th>방명록</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="tr_<%= visitor.id %>">
+          <td><%= visitor.id %></td>
+          <td><%= visitor.name %></td>
+          <td><%= visitor.comment %></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <a href="/visitor"> 뒤로가기</a>
+  </body>
+</html>
