@@ -34,7 +34,30 @@ const Visitor = sequelize.define(
   }
 );
 
-export default Visitor;
+// getAll 메서드 추가
+Visitor.getAll = async () => {
+  return await Visitor.findAll();
+};
+
+// postData 메서드 추가 (방명록 등록 기능)
+Visitor.postData = async ({ userid, name, comment }) => {
+  return await Visitor.create({ userid, name, comment });
+};
+
+//  특정 방문자 정보 가져오는 메서드 추가
+Visitor.getOne = async (id) => {
+  return await Visitor.findByPk(id);
+};
+
+//  방명록 삭제 기능 추가
+Visitor.deleteRow = async (id) => {
+  return await Visitor.destroy({ where: { id } });
+};
+
+//  방명록 업데이트 기능 추가
+Visitor.updateRow = async ({ id, userid, name, comment }) => {
+  return await Visitor.update({ userid, name, comment }, { where: { id } });
+};
 
 // 데이터베이스 연결 확인
 sequelize
@@ -45,3 +68,5 @@ sequelize
   .catch((error) => {
     console.log("데이터베이스 연결 실패: ", error);
   });
+
+export default Visitor;

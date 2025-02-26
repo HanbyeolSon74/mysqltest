@@ -1,4 +1,4 @@
-import VisitorModel from "../models/visitorModel.js"; // ES 모듈 방식으로 import
+import VisitorModel from "../models/visitorModel.js";
 
 // 모든 방문자 가져오기
 const getAll = async (req, res) => {
@@ -20,34 +20,49 @@ const visitorOne = async (req, res) => {
   res.render("visitorone", { visitor });
 };
 
-// 방명록 등록
+// ✅ 방명록 등록
 const createTest = async (req, res) => {
   try {
     const { userid, name, comment } = req.body;
     await VisitorModel.postData({ userid, name, comment });
-    res.send("200");
+    res.status(201).send("방명록 등록 성공!");
   } catch (error) {
     console.error("방명록 등록 중 오류 발생:", error);
     res.status(500).send("서버 오류 발생");
   }
 };
 
-// 방명록 삭제
+// ✅ 방명록 삭제
 const deleteData = async (req, res) => {
-  await VisitorModel.deleteRow(req.params.id);
-  res.send("200");
+  try {
+    await VisitorModel.deleteRow(req.params.id);
+    res.send("삭제 성공!");
+  } catch (error) {
+    console.error("삭제 중 오류 발생:", error);
+    res.status(500).send("서버 오류 발생");
+  }
 };
 
-// 수정 페이지로 이동
+// ✅ 수정 페이지로 이동
 const moveWrite = async (req, res) => {
-  const visitor = await VisitorModel.getOne(req.params.id);
-  res.render("visitorwrite", { visitor });
+  try {
+    const visitor = await VisitorModel.getOne(req.params.id);
+    res.render("visitorwrite", { visitor });
+  } catch (error) {
+    console.error("수정 페이지 이동 중 오류 발생:", error);
+    res.status(500).send("서버 오류 발생");
+  }
 };
 
-// 방명록 데이터 업데이트
+// ✅ 방명록 데이터 업데이트
 const dataUpdate = async (req, res) => {
-  await VisitorModel.updateRow(req.body);
-  res.send("200");
+  try {
+    await VisitorModel.updateRow(req.body);
+    res.send("업데이트 성공!");
+  } catch (error) {
+    console.error("업데이트 중 오류 발생:", error);
+    res.status(500).send("서버 오류 발생");
+  }
 };
 
 export default {
@@ -57,4 +72,4 @@ export default {
   deleteData,
   moveWrite,
   dataUpdate,
-}; // default로 내보내기
+};

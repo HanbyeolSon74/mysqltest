@@ -9,7 +9,7 @@ router.get("/detail/:id", visitorController.visitorOne);
 
 router.get("/write/:id", visitorController.moveWrite);
 
-router.post("/post/test", visitorController.createTest);
+router.post("/post/add", visitorController.createTest);
 
 router.delete("/delete/:id", visitorController.deleteData);
 
