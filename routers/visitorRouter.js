@@ -1,6 +1,7 @@
-const express = require("express");
+import express from "express";
+import visitorController from "../controllers/visitorController.js"; // import로 변경
+
 const router = express.Router();
-const visitorController = require("../controllers/visitorController");
 
 router.get("/", visitorController.getAll);
 
@@ -14,4 +15,4 @@ router.delete("/delete/:id", visitorController.deleteData);
 
 router.put("/update", visitorController.dataUpdate);
 
-module.exports = router;
+export default router;
