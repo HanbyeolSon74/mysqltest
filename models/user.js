@@ -1,24 +1,28 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class user extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
+import { DataTypes } from "sequelize";
+import db from "../config/db.js"; // 데이터베이스 설정 불러오기
+
+const User = db.define(
+  "User",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    timestamps: false, // ⬅️ createdAt, updatedAt 자동 추가 방지
+    tableName: "Users", // ⬅️ 테이블명 명시 (대소문자 일치)
   }
-  user.init({
-    name: DataTypes.STRING,
-    email: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'user',
-  });
-  return user;
-};
+);
+
+export default User;

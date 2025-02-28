@@ -1,35 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>로그인</title>
-    <link rel="stylesheet" href="/css/main.css" />
-  </head>
-  <body>
-    <div class="login-box">
-      <form id="loginForm">
-        <!-- 아이디 입력 -->
-        <input
-          type="text"
-          id="username"
-          placeholder="아이디를 입력해 주세요"
-          name="username"
-          required
-        />
-        <!-- 비밀번호 입력 -->
-        <input
-          type="password"
-          placeholder="비밀번호를 입력해 주세요"
-          name="password"
-          id="password"
-          required
-        />
-        <!-- 로그인 버튼 -->
-        <div class="btn" onclick="login()">로그인</div>
-      </form>
-    </div>
-
     <script>
       function login() {
         const username = document.getElementById("username").value;
@@ -37,23 +11,42 @@
 
         fetch("/auth/login", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password }),
         })
           .then((response) => response.json())
           .then((data) => {
             if (data.message === "로그인 성공") {
-              alert("로그인 성공");
-              // 토큰은 쿠키에 저장되므로 별도로 처리하지 않아도 됩니다.
-              // 필요 시, 서버에서 제공하는 토큰을 확인할 수 있습니다.
+              alert(`${username}님 환영합니다!`);
+              window.location.href = `/welcome?username=${username}`; // ✅ 환영 페이지로 이동
             } else {
               alert(data.message);
             }
           })
           .catch((error) => console.error("Error:", error));
       }
+
+      function register() {
+        window.location.href = "/auth/register"; // 회원가입 페이지로 리다이렉트
+      }
+
+      function logout() {
+        fetch("/auth/logout", { method: "POST" })
+          .then(() => {
+            alert("로그아웃 성공!");
+            window.location.href = "/login";
+          })
+          .catch((error) => console.error("Error:", error));
+      }
     </script>
+  </head>
+  <body>
+    <h2>로그인 / 회원가입</h2>
+    <input type="text" id="username" placeholder="아이디" />
+    <input type="password" id="password" placeholder="비밀번호" />
+    <button onclick="login()">로그인</button>
+    <button onclick="register()">회원가입</button>
+    <!-- 회원가입 페이지로 이동 -->
+    <button onclick="logout()">로그아웃</button>
   </body>
 </html>

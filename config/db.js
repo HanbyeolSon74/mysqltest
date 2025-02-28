@@ -1,10 +1,9 @@
-import mysql from "mysql2/promise";
+import { Sequelize } from "sequelize";
 
-const db = mysql.createPool({
+const db = new Sequelize("jwt", "root", "", {
   host: "localhost",
-  user: "root",
-  password: "",
-  database: "jwt", // 데이터베이스 이름
+  dialect: "mysql",
+  logging: false, // 콘솔에 SQL 쿼리 출력 X
 });
 
-export default db; // ✅ default export 추가
+export default db;
