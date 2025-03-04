@@ -4,12 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>환영합니다</title>
+    <script>
+      function logout() {
+        fetch("/auth/logout", {
+          method: "POST",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message);
+            window.location.href = "/login";
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    </script>
   </head>
   <body>
     <div class="welcome-box">
-      <h1><%= username %>님 환영합니다! 🎉</h1>
+      <h1><%= username %>님 환영합니다!</h1>
       <a href="/">메인 페이지로 이동</a>
-      <a href="/auth/logout">로그아웃</a>
+      <button onclick="logout()">로그아웃</button>
     </div>
   </body>
 </html>

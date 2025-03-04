@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>로그인</title>
+
     <script>
       function login() {
         const username = document.getElementById("username").value;
@@ -18,7 +19,7 @@
           .then((data) => {
             if (data.message === "로그인 성공") {
               alert(`${username}님 환영합니다!`);
-              window.location.href = `/welcome?username=${username}`; // ✅ 환영 페이지로 이동
+              window.location.href = `/welcome?username=${username}`;
             } else {
               alert(data.message);
             }
@@ -27,25 +28,29 @@
       }
 
       function register() {
-        window.location.href = "/auth/register"; // 회원가입 페이지로 리다이렉트
+        window.location.href = "/auth/register";
       }
 
       function logout() {
-        fetch("/auth/logout", { method: "POST" })
+        fetch("/auth/logout", {
+          method: "POST",
+        })
           .then(() => {
             alert("로그아웃 성공!");
-            window.location.href = "/login";
+            window.location.href = "/login"; // 로그인 페이지로 이동
           })
           .catch((error) => console.error("Error:", error));
       }
     </script>
   </head>
+
   <body>
     <h2>로그인 / 회원가입</h2>
     <input type="text" id="username" placeholder="아이디" />
     <input type="password" id="password" placeholder="비밀번호" />
     <button onclick="login()">로그인</button>
     <button onclick="register()">회원가입</button>
+
     <!-- 회원가입 페이지로 이동 -->
     <button onclick="logout()">로그아웃</button>
   </body>
